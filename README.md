@@ -1,0 +1,1 @@
+To initialize, run `ruby setup.rb`
