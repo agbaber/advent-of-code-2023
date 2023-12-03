@@ -21,14 +21,11 @@ class Runner
         end
       end
 
-      if parsed_results['red'] > 12 || parsed_results['green'] > 13 || parsed_results['blue'] > 14
-        @games[game_number] = { invalid: true }
-      else
-        @games[game_number] = { invalid: false }
-      end
+      power = parsed_results.values.inject(&:*)
+      @games[game_number] = { power: power }
     end
 
-    puts @games.select { |k,v| !v[:invalid] }.map { |k,v| k.to_i}.inject(&:+)
+    puts @games.map { |k,v| v[:power].to_i}.inject(&:+)
   end
 
   private
