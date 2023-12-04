@@ -12,36 +12,29 @@ class Runner
       @cards << {
         card_num: match_data['card_num'].to_i,
         winning_nums: match_data['winning_nums'].split(' '),
-        our_nums: match_data['our_nums'].split(' ')
+        our_nums: match_data['our_nums'].split(' '),
+        points: 0
       }
     end
     @all_cards_count = @cards.size
 
-    @cards.each do |card|
+    @cards.reverse.each do |card|
       get_winners(card)
     end
 
-    until @won_cards.empty?
-      won_clone = @won_cards.dup
-      @won_cards = []
-      won_clone.each do |card|
-        get_winners(card)
-      end
-    end
-
-    @all_cards_count
+    @cards.map { |card| card[:points] }.inject(&:+) + @cards.size
   end
 
   private
 
   def get_winners(card)
     points = (card[:winning_nums] & card[:our_nums]).size
-    card[:points] = points
-    points.times.with_index do |i|
-      won_card = @cards.select { |all_card| all_card[:card_num] == (card[:card_num] + i + 1) }.first
-      @won_cards << won_card
-      puts "won card #{won_card[:card_num]} from #{card[:card_num]}"
-      @all_cards_count += 1
+
+    if points > 0
+      points.times.with_index do |i|
+        won_points = @cards[card[:card_num]..card[:card_num] + points - 1].map { |won_card| won_card[:points]}.inject(&:+)
+        card[:points] = points + won_points
+      end
     end
   end
 end
