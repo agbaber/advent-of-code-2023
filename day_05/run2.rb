@@ -29,42 +29,12 @@ class Runner
     #       source = location_mappings[:source]
     #     end
 
-      #   @seeds.each do |s|
-      #     puts s.inspect
-      #     # if s[0] >= @matching_values.first[:source_start] && s[0] <= @matching_values.first[:source_end] &&
-      #     #     s[0] + s[1] <= @matching_values.first[:source_end]
-      #       (s[0]..s[0] + s[1]).to_a.each_slice(10_000).map(&:first).each do |seed|
-      #         original_seed = seed.dup
-      #         current_source = 'seed'
-
-      #         until current_source == 'location'
-      #           local_mappings = @mappings.find { |m| m[:source] == current_source}
-      #           local_values = local_mappings[:values]
-      #           found_mapping = local_values.find { |m| seed.between?(m[:source_start], m[:source_end])}
-
-      #           if found_mapping
-      #             seed = seed - found_mapping[:source_start] + found_mapping[:destination_start]
-      #           end
-      #           # require 'pry';binding.pry
-      #           current_source = local_mappings[:destination]
-      #           # puts "id: #{seed}, destination: #{current_source}"
-      #         end
-
-      #         @seed_to_location_mapping[original_seed] = seed
-      #         # puts "\n"
-      #       end
-      #     # end
-      #     # puts @seed_to_location_mapping
-      #     puts @seed_to_location_mapping.min_by { |k,v| v }&.last
-
-      #     @seed_to_location_mapping.min_by { |k,v| v }&.last
-      #   # end
-      # # end
-
-
+        # @seeds.each do |s|
+          # puts s.inspect
           # if s[0] >= @matching_values.first[:source_start] && s[0] <= @matching_values.first[:source_end] &&
           #     s[0] + s[1] <= @matching_values.first[:source_end]
-            (221434439..24088025).to_a.each_slice(1_000).map(&:first).each do |seed|
+            # (s[0]..s[0] + s[1]).to_a.each_slice(10_000).map(&:first).each do |seed|
+            (2405196863..2406693242).to_a.each do |seed|
               original_seed = seed.dup
               current_source = 'seed'
 
@@ -87,16 +57,22 @@ class Runner
           # end
           # puts @seed_to_location_mapping
           puts @seed_to_location_mapping.min_by { |k,v| v }&.last
-
-          @seed_to_location_mapping.min_by { |k,v| v }&.last
+# puts @seed_to_location_mapping.select {|k,v| v == 2258308}
+          result = @seed_to_location_mapping.min_by { |k,v| v }&.last
+          puts @seed_to_location_mapping.select {|k,v| v == result}
+          result
         # end
       # end
+    # end
 
 
     require 'pry';binding.pry
 
     @seed_to_location_mapping.min_by { |k,v| v }&.last
   end
+
+  # 2258308 too high
+  # 2254687 too high
 
   private
 
