@@ -59,12 +59,6 @@ class Runner
 
   private
 
-  def score(hand, tally)
-    {
-
-    }
-  end
-
 end
 
 if Runner.new('test.txt').run == 6440
