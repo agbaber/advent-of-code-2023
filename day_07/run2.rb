@@ -36,35 +36,6 @@ class Runner
         j_count: j_count
       }
     end
-    # puts @hands
-    # require 'pry';binding.pry
-
-    # output = @hands.sort_by do |h|
-    #   [
-    #     if h[:tally][0] && h[:tally][0][0] != 1
-    #       h[:of_a_kind] = h[:tally][0][1] + (h[:j_count] || 0)
-    #       h[:of_a_kind]
-    #     elsif (h[:tally][0] && h[:tally][0][0] == 1 && h[:tally][0][1] != 5) 
-    #       h[:of_a_kind] = h[:tally][0][1] + (h[:tally][1] ? h[:tally][1][1] : 1)
-    #       h[:of_a_kind]
-    #     else
-    #       h[:of_a_kind] = (h[:tally][0] ? h[:tally][0][1] : 0)
-    #       h[:of_a_kind]
-    #     end,
-
-    #     if !h[:of_a_kind] || h[:of_a_kind] < 4
-    #       h[:of_a_kind] = h[:tally][1] ? h[:tally][1][1] : (h[:j_count] ? h[:j_count] + 1 : 0)
-    #       h[:of_a_kind]
-    #     end,
-
-    #     h[:scored_hand][0],
-    #     h[:scored_hand][1],
-    #     h[:scored_hand][2],
-    #     h[:scored_hand][3],
-    #     h[:scored_hand][4]
-    #   ].flatten
-    # end
-
 
     output = @hands.sort_by do |h|
       [
@@ -81,17 +52,7 @@ class Runner
     result = output.map { |o| o[:rank] * o[:bet]}.inject(&:+)
     puts result
     result
-
   end
-
-  # 253796867 too high
-  # 253788319 too high
-  # 253665541 too high
-  # 254120029
-  # 253810806
-  # 252991511
-  # 252263273
-  # 250436787
 
   private
 
@@ -120,7 +81,15 @@ class Runner
       when 1
         :five_of_a_kind
       when 2
-        non_j_tally.size == 2 ? :full_house : :three_of_a_kind
+        if non_j_tally[0] && non_j_tally[0][1] == 3
+          :four_of_a_kind
+        elsif non_j_tally[0] && (non_j_tally[0][1] == 2 && non_j_tally[1])
+          :full_house
+        elsif non_j_tally[0]
+          :three_of_a_kind
+        else
+          :pair
+        end
       when 3
         :three_of_a_kind
       when 4
