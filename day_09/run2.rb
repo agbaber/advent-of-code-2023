@@ -28,16 +28,17 @@ class Runner
       arrays = set[1].reverse
       arrays.each_with_index do |array, i|
 
-        unless array.uniq == [0]
+        # unless array.uniq == [0]
           if arrays[i+1]
-            arrays[i+1][-1] = arrays[i+1][-1] + array[-1]
+            arrays[i+1].insert(0, arrays[i+1][0] - array[0])
           end
-        end
+        # end
       end
     end
 
+    puts @sets.inspect
     @sets.map do |set|
-      set[1][0][-1]
+      set[1][0][0]
     end.inject(&:+)
   end
 
@@ -49,6 +50,6 @@ class Runner
 
 end
 
-if Runner.new('test.txt').run == 114
+if Runner.new('test.txt').run == 2
   puts Runner.new('input.txt').run
 end
