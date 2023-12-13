@@ -8,10 +8,11 @@ class Runner
     @input.each_line do |line|
       springs, records = line.split(' ')
       mapped_records = records.split(',').map(&:to_i)
+      # require 'pry';binding.pry
 
       @lines << {
-        springs: springs.split(''),
-        records: mapped_records,
+        springs: springs.split('') * 5,
+        records: mapped_records * 5,
         valid_combinations: 0
       }
     end
@@ -35,7 +36,7 @@ class Runner
       end
     end
 
-    puts @lines.inspect
+    # puts @lines.inspect
 
     @lines.map {|l| l[:valid_combinations]}.inject(&:+)
   end
@@ -74,6 +75,7 @@ class Runner
   end
 end
 
-if Runner.new('test.txt').run == 21
+if Runner.new('test.txt').run == 525152
+  puts "Success. Doing it for real..."
   puts Runner.new('input.txt').run 
 end
